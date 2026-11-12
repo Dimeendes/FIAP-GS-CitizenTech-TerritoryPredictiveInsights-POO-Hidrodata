@@ -1,5 +1,5 @@
 package br.com.hidrodata.repository;
 
-public class MedicaoRepository {
+public class MedicaoDao {
     
 }

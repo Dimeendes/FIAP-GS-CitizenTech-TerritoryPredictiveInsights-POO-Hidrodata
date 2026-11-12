@@ -1,5 +1,5 @@
 package br.com.hidrodata.repository;
 
-public class AlertaRepository {
+public class AlertaDao {
     
 }
