@@ -29,3 +29,6 @@ hs_err_pid*
 # Arquivos temporários de sistema operacional
 .DS_Store
 Thumbs.db
+
+#banco h2 local
+data/
