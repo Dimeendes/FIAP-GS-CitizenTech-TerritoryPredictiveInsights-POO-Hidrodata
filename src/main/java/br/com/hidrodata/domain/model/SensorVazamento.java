@@ -34,7 +34,7 @@ public class SensorVazamento extends ComponenteTerritorial implements Sensor {
 
     @Override
     public String retornarTipo() {
-        return "Vazamento";
+        return "VAZAMENTO";
     }
 
     @Override
