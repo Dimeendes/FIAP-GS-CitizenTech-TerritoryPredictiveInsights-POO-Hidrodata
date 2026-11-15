@@ -6,12 +6,4 @@ public interface Sensor {
     boolean verificarFuncionamento();
 
     String retornarTipo();
-
-    default double getValorLitros() {
-        return lerValor();
-    }
-
-    default String getTipo() {
-        return retornarTipo();
-    }
 }

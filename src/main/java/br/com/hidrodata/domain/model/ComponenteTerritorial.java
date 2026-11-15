@@ -1,5 +1,7 @@
 package br.com.hidrodata.domain.model;
 
+import br.com.hidrodata.exception.DadosInvalidosException;
+
 public abstract class ComponenteTerritorial {
     private int id;
     private String nome;
@@ -8,9 +10,9 @@ public abstract class ComponenteTerritorial {
 
     public ComponenteTerritorial(int id, String nome, String regiao, String status) {
         this.id = id;
-        this.nome = nome;
-        this.regiao = regiao;
-        this.status = status;
+        atualizarNome(nome);
+        alterarRegiao(regiao);
+        atualizarStatus(status);
     }
 
     public int getId() {
@@ -27,7 +29,7 @@ public abstract class ComponenteTerritorial {
 
     public void atualizarNome(String novoNome) {
         if (novoNome == null || novoNome.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome não pode ser nulo ou vazio.");
+            throw new DadosInvalidosException("O nome não pode ser nulo ou vazio.");
         } else {
             setNome(novoNome);
         }
@@ -42,9 +44,9 @@ public abstract class ComponenteTerritorial {
         
     }
 
-    public void AlterarRegiao(String novaRegiao) {
-        if (novaRegiao == null || !novaRegiao.trim().isEmpty()) {
-            throw new IllegalArgumentException("A região não pode ser nula ou vazia.");
+    public void alterarRegiao(String novaRegiao) {
+        if (novaRegiao == null || novaRegiao.trim().isEmpty()) {
+            throw new DadosInvalidosException("A região não pode ser nula ou vazia.");
         } else {
             setRegiao(novaRegiao);
         }
@@ -60,7 +62,7 @@ public abstract class ComponenteTerritorial {
 
     public void atualizarStatus(String novoStatus) {
         if (novoStatus == null || novoStatus.trim().isEmpty()) {
-            throw new IllegalArgumentException("O status não pode ser nulo ou vazio.");
+            throw new DadosInvalidosException("O status não pode ser nulo ou vazio.");
         } else {
             setStatus(novoStatus);
         }

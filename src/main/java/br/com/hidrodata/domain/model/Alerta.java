@@ -1,59 +1,78 @@
 package br.com.hidrodata.domain.model;
 
+import java.time.LocalDateTime;
+
 import br.com.hidrodata.exception.DadosInvalidosException;
 
-public class Alerta extends ComponenteTerritorial implements Sensor {
-    private double valorLitros;
-    private String tipo;
-    private String prioridade;
+public class Alerta {
+    private Long id;
+    private int sensorId;
+    private String tipoSensor;
+    private NivelAlerta nivel;
+    private double valorPrevisto;
+    private double limite;
+    private String estrategia;
+    private String mensagem;
+    private LocalDateTime dataHora;
 
-    public Alerta( String prioridade, int id, String nome, String regiao, String status, double valorLitros, String tipo ) {
-        super(id, nome, regiao, status);
-        this.valorLitros = valorLitros;
-        this.tipo = tipo;
-        this.prioridade = prioridade;
+    public Alerta(int sensorId, String tipoSensor, NivelAlerta nivel, double valorPrevisto, double limite, String estrategia, String mensagem, LocalDateTime dataHora) {
+        this(null, sensorId, tipoSensor, nivel, valorPrevisto, limite, estrategia, mensagem, dataHora);
     }
 
-    @Override
-    public double lerValor() {
-        return valorLitros;
-    }
-
-    private void setValorLitros(double novoValor) {
-        this.valorLitros = novoValor;
-    }
-
-    public void atualizarValorLitros(double novoValor) {
-        if (novoValor < 0) {
-            throw new DadosInvalidosException("O valor em litros não pode ser negativo.");
-        } else {
-            setValorLitros(novoValor);
+    public Alerta(Long id, int sensorId, String tipoSensor, NivelAlerta nivel, double valorPrevisto, double limite, String estrategia, String mensagem, LocalDateTime dataHora) {
+        if(nivel == null) {
+            throw new DadosInvalidosException("O nível do alerta não pode ser nulo.");
         }
-    }
-
-    @Override
-    public boolean verificarFuncionamento() {
-        return "ATIVO".equalsIgnoreCase(getStatus());
-    }
-
-    @Override
-    public String retornarTipo() {
-        return tipo;
-    }
-
-    @Override
-    public String verificarStatus() {
-        if (getStatus() == null || getStatus().isBlank()) {
-            throw new IllegalStateException("O status do alerta não foi informado.");
+        if(mensagem == null || mensagem.isBlank()) {
+            throw new DadosInvalidosException("A mensagem do alerta não pode ser nula ou vazia.");
         }
-        return getStatus();
+        if(dataHora == null) {
+            throw new DadosInvalidosException("A data e hora da medição não pode ser nula.");
+        }
+        this.id = id;  
+        this.sensorId = sensorId;
+        this.tipoSensor = tipoSensor;
+        this.nivel = nivel;
+        this.valorPrevisto = valorPrevisto;
+        this.limite = limite;
+        this.estrategia = estrategia;
+        this.mensagem = mensagem;
+        this.dataHora = dataHora;
+    }
+    
+    public Long getId() {
+        return id;
     }
 
-    public String getPrioridade() {
-        return prioridade;
+    public int getSensorId() {
+        return sensorId;
     }
 
-    public void setPrioridade(String prioridade) {
-        this.prioridade = prioridade;
+    public String getTipoSensor() {
+        return tipoSensor;
+    }
+
+    public NivelAlerta getNivel() {
+        return nivel;
+    }
+
+    public double getValorPrevisto() {
+        return valorPrevisto;
+    }
+
+    public double getLimite() {
+        return limite;
+    }
+
+    public String getEstrategia() {
+        return estrategia;
+    }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
     }
 }

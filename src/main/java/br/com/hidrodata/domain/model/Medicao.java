@@ -1,54 +1,54 @@
 package br.com.hidrodata.domain.model;
 
+import java.time.LocalDateTime;
+
 import br.com.hidrodata.exception.DadosInvalidosException;
 
-public class Medicao extends ComponenteTerritorial implements Sensor {
-    private double valorLitros;
-    private String tipo;
-    private String dataHora;
+public class Medicao{
+    private Long id;
+    private int sensorId;
+    private String tipoSensor;
+    private double valor;
+    private LocalDateTime dataHora;
 
-    public Medicao(int id, String nome, String regiao, String status, double valorLitros, String tipo, String dataHora) {
-        super(id, nome, regiao, status);
-        atualizarValorLitros(valorLitros);
-        this.tipo = tipo;
+    public Medicao(int sensorId, String tipoSensor, double valor, LocalDateTime dataHora) {
+        this(null, sensorId, tipoSensor, valor, dataHora);
+    }
+
+    public Medicao(Long id, int sensorId, String tipoSensor, double valor, LocalDateTime dataHora) {
+        if(tipoSensor == null || tipoSensor.isBlank()) {
+            throw new DadosInvalidosException("O tipo do sensor não pode ser nulo ou vazio.");
+        }
+        if(Double.isNaN(valor) || Double.isInfinite(valor) || valor < 0) {
+            throw new DadosInvalidosException("Medição inválida do sensor " + sensorId + ": valor " + valor + " fora de faixa.");
+        }
+        if(dataHora == null) {
+            throw new DadosInvalidosException("A data e hora da medição não pode ser nula.");
+        }
+        this.id = id;  
+        this.sensorId = sensorId;
+        this.tipoSensor = tipoSensor;
+        this.valor = valor;
         this.dataHora = dataHora;
     }
-
-    @Override
-    public double lerValor() {
-        return valorLitros;
+    
+    public Long getId() {
+        return id;
     }
 
-    public void atualizarValorLitros(double novoValor) {
-        if (novoValor < 0) {
-            throw new DadosInvalidosException("O valor em litros não pode ser negativo.");
-        }
-        valorLitros = novoValor;
+    public int getSensorId() {
+        return sensorId;
     }
 
-    @Override
-    public boolean verificarFuncionamento() {
-        return "ATIVO".equalsIgnoreCase(getStatus());
+    public String getTipoSensor() {
+        return tipoSensor;
     }
 
-    @Override
-    public String retornarTipo() {
-        return tipo;
+    public double getValor() {
+        return valor;
     }
 
-    @Override
-    public String verificarStatus() {
-        if (getStatus() == null || getStatus().isBlank()) {
-            throw new IllegalStateException("O status da medição não foi informado.");
-        }
-        return getStatus();
-    }
-
-    public String getDataHora() {
+    public LocalDateTime getDataHora() {
         return dataHora;
-    }
-
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
     }
 }

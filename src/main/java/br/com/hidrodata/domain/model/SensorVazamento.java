@@ -1,28 +1,30 @@
 package br.com.hidrodata.domain.model;
 
-import br.com.hidrodata.exception.DadosInvalidosException;
+import java.util.Random;
+
+import br.com.hidrodata.exception.FonteIndisponivelException;
 
 public class SensorVazamento extends ComponenteTerritorial implements Sensor {
-    private double valorLitros;
-    private String tipo;
+    private static final double LIMITE_DETECCAO_LITROS_HORA = 50;
     private boolean vazamentoDetectado;
+    private Random random = new Random();
+    
 
-    public SensorVazamento( int id, String nome, String regiao, String status, double valorLitros, String tipo ) {
+    public SensorVazamento(int id, String nome, String regiao, String status) {
         super(id, nome, regiao, status);
-        atualizarValorLitros(valorLitros);
-        this.tipo = tipo;
     }
 
     @Override
     public double lerValor() {
-        return valorLitros;
-    }
-
-    public void atualizarValorLitros(double novoValor) {
-        if (novoValor < 0) {
-            throw new DadosInvalidosException("O valor em litros não pode ser negativo.");
+        if(!verificarFuncionamento()) {
+            throw new FonteIndisponivelException("O sensor de vazamento '" +getNome() + "'(id " + getId() + ") está " + getStatus() + " e não está funcionando.");
         }
-        valorLitros = novoValor;
+        if(random.nextDouble() < 0.05) {
+            throw new FonteIndisponivelException("O sensor de vazamento '" + getNome() + "'(id " + getId() + ") está com falha temporária e não conseguiu ler o valor.");
+        }
+        double perda = random.nextDouble() * 300;
+        vazamentoDetectado = perda > LIMITE_DETECCAO_LITROS_HORA;
+        return perda;
     }
 
     @Override
@@ -32,22 +34,15 @@ public class SensorVazamento extends ComponenteTerritorial implements Sensor {
 
     @Override
     public String retornarTipo() {
-        return tipo;
+        return "Vazamento";
     }
 
     @Override
     public String verificarStatus() {
-        if (getStatus() == null || getStatus().isBlank()) {
-            throw new IllegalStateException("O status do sensor de vazamento não foi informado.");
-        }
-        return getStatus();
+        return "Sensor de Vazamento '" + getNome() + "' (id " + getId() + "): " + getStatus() + (vazamentoDetectado ? " - Vazamento detectado!" : " - Sem vazamento detectado." );
     }
 
     public boolean isVazamentoDetectado() {
         return vazamentoDetectado;
-    }
-
-    public void atualizarDeteccaoVazamento(boolean detectado) {
-        vazamentoDetectado = detectado;
     }
 }
