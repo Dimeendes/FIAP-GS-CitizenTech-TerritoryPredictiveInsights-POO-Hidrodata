@@ -14,7 +14,7 @@ public abstract class EstrategiaPrevisao {
             throw new DadosInvalidosException("O nome da estratégia não pode ser nulo ou vazio.");
         }
         if(minimoLeituras < 1) {
-            throw new DadosInvalidosException("O mínimo de leituras deve ser maior que um.");
+            throw new DadosInvalidosException("O mínimo de leituras deve ser pelo menos um.");
         }
         this.nomeEstrategia = nomeEstrategia;
         this.minimoLeituras = minimoLeituras;

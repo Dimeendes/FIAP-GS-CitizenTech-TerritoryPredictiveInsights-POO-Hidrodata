@@ -1,7 +1,8 @@
 package br.com.hidrodata.domain.strategy;
 
-import br.com.hidrodata.domain.model.Medicao;
 import java.util.List;
+
+import br.com.hidrodata.domain.model.Medicao;
 
 public class PrevisaoComparacao extends EstrategiaPrevisao{
     private final int tamanhoPeriodo;
@@ -28,11 +29,11 @@ public class PrevisaoComparacao extends EstrategiaPrevisao{
         
         String tendencia;
         if(variacao > 0) {
-            tendencia = "aumentando";
+            tendencia = "subiu";
         } else if(variacao < 0) {
-            tendencia = "diminuindo";
+            tendencia = "diminuiu";
         } else {
-            tendencia = "estável";
+            tendencia = "ficou estável";
         }
         return String.format("Média das últimas %d leituras (%.2f) %s %.2f em relação às %d anteriores (%.2f). Se a tendência se mantiver, a próxima leitura deve ficar perto de %.2f.", 
                 tamanhoPeriodo, mediaAtual, tendencia, Math.abs(variacao), tamanhoPeriodo, mediaAnterior, valorPrevisto);
