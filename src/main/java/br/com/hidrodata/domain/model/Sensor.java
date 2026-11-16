@@ -6,4 +6,14 @@ public interface Sensor {
     boolean verificarFuncionamento();
 
     String retornarTipo();
+
+    int getId();
+
+    String getNome();
+
+    String getRegiao();
+
+    String verificarStatus();
+
+    void atualizarStatus(String novoStatus);
 }
