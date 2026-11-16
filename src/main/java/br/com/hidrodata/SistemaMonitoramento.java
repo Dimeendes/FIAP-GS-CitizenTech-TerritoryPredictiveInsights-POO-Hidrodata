@@ -64,7 +64,7 @@ public class SistemaMonitoramento implements CommandLineRunner{
     private void exibirMenu(){
         System.out.println();
         System.out.println("1 - Verificar sensores (ler e gravar medições)");
-        System.out.println("2 - Rodar previsõese e emitir alertas");
+        System.out.println("2 - Rodar previsões e emitir alertas");
         System.out.println("3 - Ver histórico");
         System.out.println("4 - Gerenciar dados do território");
         System.out.println("5 - Status completo");
