@@ -30,3 +30,5 @@ As previsões extrapolam padrões recentes: a média móvel resume as últimas l
 O alerta compara a previsão com limites configurados para cada tipo de medição e apresenta uma indicação de atenção. Ele não confirma sozinho que há um problema, não identifica sua causa e não executa uma ação corretiva. Cabe à pessoa responsável considerar o contexto, verificar a qualidade das medições e, quando necessário, confirmar a situação antes de decidir o que fazer.
 
 Os limites são parâmetros operacionais que podem precisar de revisão conforme o contexto local. Portanto, tanto previsões quanto alertas devem ser usados como apoio à análise humana, não como decisão automática ou substituto de inspeção técnica.
+
+**Foi feito uso de IA para procura de erros de clean code**
